@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Booking Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- NAVIGATION -->
+    <div class="nav">
+        <div class="logo">
+            <i class="fas fa-calendar-check"></i>
+            <span>BookEasy</span>
+        </div>
+        <div class="nav-links">
+            <span class="nav-link active" onclick="showScreen('home')">Home</span>
+            <span class="nav-link" onclick="showScreen('login')">Login</span>
+            <span class="nav-link" onclick="showScreen('register')">Register</span>
+            <span class="nav-link" onclick="showScreen('customerDashboard')">Customer</span>
+            <span class="nav-link" onclick="showScreen('adminDashboard')">Admin</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- HOME SCREEN -->
+        <div id="home" class="screen active">
+            <h1>Welcome to BookEasy</h1>
+            <div class="card">
+                <h2>Easy Appointment Booking</h2>
+                <p>Book your appointments with ease using our intuitive platform. Choose from a variety of services and find the perfect time slot that works for you.</p>
+                <div class="button-group">
+                    <button class="btn" onclick="showScreen('customerDashboard')">Book Now</button>
+                    <button class="btn btn-outline" onclick="showScreen('register')">Create Account</button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>Our Services</h2>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-cut"></i>
+                        </div>
+                        <div class="service-name">Haircut & Styling</div>
+                        <div class="service-price">₹200</div>
+                        <div class="service-duration">30 mins</div>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-spa"></i>
+                        </div>
+                        <div class="service-name">Facial Treatment</div>
+                        <div class="service-price">₹500</div>
+                        <div class="service-duration">45 mins</div>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-hands"></i>
+                        </div>
+                        <div class="service-name">Massage Therapy</div>
+                        <div class="service-price">₹1200</div>
+                        <div class="service-duration">60 mins</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LOGIN SCREEN -->
+        <div id="login" class="screen">
+            <div class="card">
+                <h2>Login to Your Account</h2>
+                <div class="form-group">
+                    <label for="login_email">Email</label>
+                    <input id="login_email" type="email" placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="login_password">Password</label>
+                    <input id="login_password" type="password" placeholder="Enter your password">
+                </div>
+                <button class="btn btn-block" onclick="fakeLogin()">Login</button>
+                <p class="form-footer">
+                    Don't have an account? <a href="#" onclick="showScreen('register')">Register here</a>
+                </p>
+            </div>
+        </div>
+
+        <!-- REGISTER SCREEN -->
+        <div id="register" class="screen">
+            <div class="card">
+                <h2>Create Your Account</h2>
+                <div class="form-group">
+                    <label for="reg_name">Full Name</label>
+                    <input id="reg_name" placeholder="Enter your full name">
+                </div>
+                <div class="form-group">
+                    <label for="reg_email">Email</label>
+                    <input id="reg_email" type="email" placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="reg_password">Password</label>
+                    <input id="reg_password" type="password" placeholder="Create a password">
+                </div>
+                <div class="form-group">
+                    <label for="reg_confirm_password">Confirm Password</label>
+                    <input id="reg_confirm_password" type="password" placeholder="Confirm your password">
+                </div>
+                <button class="btn btn-block" onclick="toast('Account Registered Successfully!')">Register</button>
+                <p class="form-footer">
+                    Already have an account? <a href="#" onclick="showScreen('login')">Login here</a>
+                </p>
+            </div>
+        </div>
+
+        <!-- CUSTOMER DASHBOARD -->
+        <div id="customerDashboard" class="screen">
+            <h2>Welcome, Customer! 👋</h2>
+            
+            <div class="card">
+                <h3>Available Services</h3>
+                <div id="services" class="services-grid"></div>
+            </div>
+
+            <div id="bookingCard" class="booking-form">
+                <div class="card">
+                    <h3>Book Your Appointment</h3>
+                    
+                    <div class="booking-summary">
+                        <h4>Service Selected</h4>
+                        <p><strong id="selectedServiceName"></strong> - ₹<span id="selectedServicePrice"></span></p>
+                        <p id="selectedServiceDuration"></p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="bookingDate">Select Date</label>
+                        <div class="calendar" id="datePicker"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="bookingTime">Select Time</label>
+                        <div class="time-slots" id="timeSlots"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="specialRequests">Special Requests (Optional)</label>
+                        <textarea id="specialRequests" rows="3" placeholder="Any special requirements or notes..."></textarea>
+                    </div>
+                    
+                    <button class="btn btn-block" onclick="confirmBooking()">Confirm Booking</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ADMIN DASHBOARD -->
+        <div id="adminDashboard" class="screen">
+            <h2>Admin Dashboard ⚙️</h2>
+            
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalBookings">0</div>
+                    <div class="stat-label">Total Bookings</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="confirmedBookings">0</div>
+                    <div class="stat-label">Confirmed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="pendingBookings">0</div>
+                    <div class="stat-label">Pending</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="revenue">₹0</div>
+                    <div class="stat-label">Revenue</div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>All Bookings</h3>
+                <div id="adminBookings" class="bookings-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST MESSAGE -->
+    <div id="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
